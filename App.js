@@ -1,94 +1,50 @@
-import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { ButtonHighlight as Button } from "./src/components";
+import { Keyboard, Display } from "./src/components/layout";
 
-const symbols = {
-  operators: ["÷", "×", "-", "+", "="],
-};
-
-function Button({ children, onPress, color = "#FCFDFD" }) {
-  return (
-    <TouchableHighlight
-      style={styles.button}
-      onPress={onPress}
-      underlayColor={`${color}55`}
-    >
-      <Text
-        style={{
-          width: "100%",
-          height: "100%",
-          textAlign: "center",
-          textAlignVertical: "center",
-          color: color,
-          fontWeight: "bold",
-          fontSize: 20,
-        }}
-      >
-        {children}
-      </Text>
-    </TouchableHighlight>
-  );
+function addDigit(digit) {
+  console.log(digit);
 }
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <View style={styles.screen}>
-        <View style={styles.lastOperation}>
-          <Text style={[styles.text]}>308</Text>
-          <Text style={[styles.text, { color: "#b4757c" }]}>×</Text>
-          <Text style={[styles.text]}>42</Text>
-        </View>
-        <Text style={[styles.text, { fontSize: 50 }]}>12936</Text>
-      </View>
-      <View style={styles.controlsContainer}>
-        <View style={styles.column}>
-          <View style={styles.row}>
-            <Button onPress={() => {}} color="#2eeec4">
-              AC
-            </Button>
-            <Button onPress={() => {}} color="#2eeec4">
-              +/-
-            </Button>
-            <Button onPress={() => {}} color="#2eeec4">
-              %
-            </Button>
-            <Button onPress={() => {}} color="#b4757c">
-              /
-            </Button>
-          </View>
-          <View style={styles.row}>
-            <Button onPress={() => {}}>7</Button>
-            <Button onPress={() => {}}>8</Button>
-            <Button onPress={() => {}}>9</Button>
-            <Button onPress={() => {}} color="#b4757c">
-              x
-            </Button>
-          </View>
-          <View style={styles.row}>
-            <Button onPress={() => {}}>4</Button>
-            <Button onPress={() => {}}>5</Button>
-            <Button onPress={() => {}}>6</Button>
-            <Button onPress={() => {}} color="#b4757c">
-              --
-            </Button>
-          </View>
-          <View style={styles.row}>
-            <Button onPress={() => {}}>1</Button>
-            <Button onPress={() => {}}>2</Button>
-            <Button onPress={() => {}}>3</Button>
-            <Button onPress={() => {}} color="#b4757c">
-              +
-            </Button>
-          </View>
-          <View style={styles.row}>
-            <Button onPress={() => {}}>R</Button>
-            <Button onPress={() => {}}>0</Button>
-            <Button onPress={() => {}}>.</Button>
-            <Button onPress={() => {}} color="#b4757c">
-              =
-            </Button>
-          </View>
-        </View>
-      </View>
+      <Display>
+        {/* <Display.History /> */}
+        <Display.Result value={12936} />
+      </Display>
+      <Keyboard>
+        <Keyboard.Row>
+          <Button label="AC" color="#2eeec4" onPress={() => addDigit("AC")} />
+          <Button label="+/-" color="#2eeec4" onPress={() => {}} />
+          <Button label="%" color="#2eeec4" onPress={() => {}} />
+          <Button label="/" color="#b4757c" onPress={() => {}} />
+        </Keyboard.Row>
+        <Keyboard.Row>
+          <Button label="7" onPress={() => {}} />
+          <Button label="8" onPress={() => {}} />
+          <Button label="9" onPress={() => {}} />
+          <Button label="x" color="#b4757c" onPress={() => {}} />
+        </Keyboard.Row>
+        <Keyboard.Row>
+          <Button label="4" onPress={() => {}} />
+          <Button label="5" onPress={() => {}} />
+          <Button label="6" onPress={() => {}} />
+          <Button label="-" color="#b4757c" onPress={() => {}} />
+        </Keyboard.Row>
+        <Keyboard.Row>
+          <Button label="1" onPress={() => {}} />
+          <Button label="2" onPress={() => {}} />
+          <Button label="3" onPress={() => {}} />
+          <Button label="+" onPress={() => {}} color="#b4757c" />
+        </Keyboard.Row>
+        <Keyboard.Row>
+          <Button label="R" onPress={() => {}} />
+          <Button label="0" onPress={() => {}} />
+          <Button label="." onPress={() => {}} />
+          <Button label="=" color="#b4757c" onPress={() => {}} />
+        </Keyboard.Row>
+      </Keyboard>
     </View>
   );
 }
@@ -97,45 +53,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#22252e",
-  },
-  screen: {
-    flex: 1,
-    margin: 25,
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-  },
-  lastOperation: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  text: {
-    fontFamily: "monospace",
-    fontWeight: "900",
-    fontSize: 25,
-    color: "#FCFDFD",
-  },
-  controlsContainer: {
-    flex: 2,
-    flexDirection: "row",
-    gap: 20,
-    backgroundColor: "#292d36",
-    borderTopStartRadius: 40,
-    borderTopEndRadius: 40,
-    padding: 20,
-  },
-  column: {
-    flex: 1,
-    gap: 20,
-  },
-  row: {
-    flex: 1,
-    flexDirection: "row",
-    gap: 20,
-  },
-  button: {
-    flex: 1,
-    backgroundColor: "#272b34",
-    borderRadius: 10,
   },
 });
