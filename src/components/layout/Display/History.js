@@ -1,11 +1,11 @@
 import { Text, View, StyleSheet } from "react-native";
 
-export default function History({ operations }) {
+export default function History({ op1, op2 }) {
   return (
     <View style={styles.lastOperation}>
-      <Text style={[styles.text]}>308</Text>
+      <Text style={[styles.text]}>{op1}</Text>
       <Text style={[styles.text, { color: "#b4757c" }]}>×</Text>
-      <Text style={[styles.text]}>42</Text>
+      <Text style={[styles.text]}>{op2}</Text>
     </View>
   );
 }
