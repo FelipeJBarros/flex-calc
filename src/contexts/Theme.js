@@ -4,7 +4,9 @@ export const ThemeContext = createContext({});
 
 function ThemeProvider({ children, theme }) {
   return (
-    <ThemeContext.Provider value={{ theme }}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={{ isDark: theme === "dark" }}>
+      {children}
+    </ThemeContext.Provider>
   );
 }
 

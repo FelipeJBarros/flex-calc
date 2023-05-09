@@ -93,7 +93,12 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <View style={styles.container}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: theme === "dark" ? "#22252e" : "#FFF",
+        }}
+      >
         <StatusBar barStyle="light-content" />
         <ToggleThemeButton value={theme !== "dark"} onToogle={toggleTheme} />
         <Display>
@@ -143,7 +148,13 @@ export default function App() {
           </Keyboard.Row>
           <Keyboard.Row>
             <Button
-              label={<FontAwesome name="undo" size={18} color="#fff" />}
+              label={
+                <FontAwesome
+                  name="undo"
+                  size={18}
+                  color={theme === "dark" ? "#FCFDFD" : "#222"}
+                />
+              }
               onPress={() => {}}
             />
             <Button label="0" onPress={() => addDigit("0")} />
@@ -159,10 +170,3 @@ export default function App() {
     </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#22252e",
-  },
-});

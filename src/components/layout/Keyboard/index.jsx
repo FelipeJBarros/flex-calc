@@ -1,9 +1,13 @@
 import { StyleSheet, View } from "react-native";
 import KeyboardRow from "./Row";
 
+import { useContext } from "react";
+import { ThemeContext } from "../../../contexts/Theme";
 export default function Keyboard({ children }) {
+  const { isDark } = useContext(ThemeContext);
+
   return (
-    <View style={styles.controlsContainer}>
+    <View style={[styles.controlsContainer, { backgroundColor: isDark ? "#292d36" : "#f9f9f9" }]}>
       <View style={styles.column}>
         {children}
       </View>

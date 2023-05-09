@@ -9,7 +9,7 @@ export function ToggleThemeButton({ value, onToogle }) {
         onTouchStart={onToogle}
         style={[
           styles.innerButton,
-          { backgroundColor: value ? "#292d36" : "#F9F9F9" },
+          { backgroundColor: !value ? "#292d36" : "#F9F9F9" },
         ]}
       >
         <Feather name="sun" size={24} color={value ? "#4b4f56" : "#444750"} />
