@@ -27,7 +27,7 @@ export function ButtonHighlight({ label, onPress, color }) {
 const styles = StyleSheet.create({
   button: {
     flex: 1,
-    borderRadius: 1000,
+    borderRadius: 12,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

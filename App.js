@@ -1,95 +1,21 @@
-import { useState, useEffect } from "react";
-import { StyleSheet, View, Text, StatusBar } from "react-native";
+import { useState } from "react";
+import { View, Text, StatusBar } from "react-native";
 
 import { ButtonHighlight as Button, ToggleThemeButton } from "./src/components";
 import { Keyboard, Display } from "./src/components/layout";
 
 import { FontAwesome } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
 
 import ThemeProvider from "./src/contexts/Theme";
-
-const initialState = {
-  displayValue: "0",
-  clearDisplay: false,
-  operation: null,
-  values: [null, null],
-  current: 0,
-};
+import useCalc from "./src/hooks/useCalc";
 
 export default function App() {
-  let [state, setState] = useState({ ...initialState });
-
   const [theme, setTheme] = useState("dark");
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
   };
 
-  function addDigit(digit) {
-    if (digit === "." && state.displayValue.includes(".")) return;
-
-    const clearDisplay = state.displayValue === "0" || state.clearDisplay;
-    const currentValue = clearDisplay ? "" : state.displayValue;
-    const displayValue = currentValue + digit;
-    setState((prevState) => ({
-      ...prevState,
-      displayValue,
-      clearDisplay: false,
-    }));
-
-    if (digit !== ".") {
-      const i = state.current;
-      const newValue = parseFloat(displayValue);
-      const values = state.values;
-      values[i] = newValue;
-      setState((prevState) => ({ ...prevState, values }));
-    }
-  }
-
-  function clearMemory() {
-    setState({ ...initialState });
-  }
-
-  function setOperation(operation) {
-    if (state.current === 0) {
-      setState((prevState) => ({
-        ...prevState,
-        operation: operation,
-        current: 1,
-        clearDisplay: true,
-        displayValue: "",
-      }));
-    } else {
-      const equals = operation === "=";
-      const currentOperation = state.operation;
-
-      const values = [...state.values];
-      values[0] = resolve(currentOperation, values);
-      values[1] = 0;
-
-      setState((prevState) => ({
-        ...prevState,
-        clearDisplay: !equals,
-        current: equals ? 0 : 1,
-        displayValue: values[0],
-        operation: equals ? null : operation,
-        values: [...values],
-      }));
-    }
-  }
-
-  function resolve(op, operands) {
-    if (op === "+") return operands[0] + operands[1];
-    else if (op === "-") return operands[0] - operands[1];
-    else if (op === "*") return operands[0] * operands[1];
-    else if (op === "/") {
-      if (operands[1] !== 0) {
-        return operands[0] / operands[1];
-      } else {
-        return "Math ERROR";
-      }
-    }
-  }
+  const { data, addDigit, setOperation, clearMemory } = useCalc();
 
   return (
     <ThemeProvider theme={theme}>
@@ -102,8 +28,11 @@ export default function App() {
         <StatusBar barStyle="light-content" />
         <ToggleThemeButton value={theme !== "dark"} onToogle={toggleTheme} />
         <Display>
-          <Display.History values={state.values} operation={state.operation} />
-          <Display.Result value={state.displayValue} />
+          <Display.History data={data} />
+          <Display.Result
+            value={data.displayValue}
+            placeholder={data.virtualResult}
+          />
         </Display>
         <Keyboard>
           <Keyboard.Row>
