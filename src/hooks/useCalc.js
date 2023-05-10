@@ -6,13 +6,14 @@ const initialState = {
   displayValue: "0",
   virtualResult: null,
   clearDisplay: false,
-  operation: null,
   values: [null, null],
+  operation: null,
   current: 0,
 };
 
 export default function useCalc() {
   let [state, setState] = useState({ ...initialState });
+  let [history, setHistory] = useState([]);
 
   useEffect(() => {
     if (state.values[1] === null) {
@@ -52,6 +53,7 @@ export default function useCalc() {
 
   function clearMemory() {
     setState({ ...initialState, values: [null, null] });
+    setHistory([]);
   }
 
   function setOperation(operation) {
@@ -67,6 +69,14 @@ export default function useCalc() {
       const currentOperation = state.operation;
 
       const values = [...state.values];
+
+      let copyHistory = [...history];
+      copyHistory.push({
+        values: [...state.values],
+        operation: state.operation,
+      });
+      setHistory(copyHistory);
+
       values[0] = resolve(currentOperation, values);
       values[1] = null;
 
@@ -95,7 +105,7 @@ export default function useCalc() {
   }
 
   return {
-    data: state,
+    data: { ...state, history },
     addDigit,
     clearMemory,
     setOperation,

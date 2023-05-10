@@ -15,7 +15,8 @@ export default function App() {
     setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
   };
 
-  const { data, addDigit, setOperation, clearMemory } = useCalc();
+  const { data, lastOperation, addDigit, setOperation, clearMemory } =
+    useCalc();
 
   return (
     <ThemeProvider theme={theme}>
@@ -28,7 +29,7 @@ export default function App() {
         <StatusBar barStyle="light-content" />
         <ToggleThemeButton value={theme !== "dark"} onToogle={toggleTheme} />
         <Display>
-          {/* <Display.History data={data} /> */}
+          <Display.History data={data.history} />
           <Display.Result data={data} />
         </Display>
         <Keyboard>

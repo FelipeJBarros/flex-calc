@@ -5,18 +5,23 @@ import { ThemeContext } from "../../../contexts/Theme";
 
 export default function History({ data }) {
   const { isDark } = useContext(ThemeContext);
-  const { values, operation, current, displayValue } = data;
 
   return (
-    <View style={styles.lastOperation}>
-      <Text style={[styles.text, { color: isDark ? "#FCFDFD" : "#222" }]}>
-        {values[0]}
-      </Text>
-      <Text style={[styles.text, { color: "#b4757c" }]}>{operation}</Text>
-      <Text style={[styles.text, { color: isDark ? "#FCFDFD" : "#222" }]}>
-        {values[1]}
-      </Text>
-    </View>
+    <>
+      {data.map((operation, idx) => (
+        <View style={styles.lastOperation} key={idx}>
+          <Text style={[styles.text, { color: isDark ? "#FCFDFD" : "#222" }]}>
+            {operation.values[0]}
+          </Text>
+          <Text style={[styles.text, { color: "#b4757c" }]}>
+            {operation.operation}
+          </Text>
+          <Text style={[styles.text, { color: isDark ? "#FCFDFD" : "#222" }]}>
+            {operation.values[1]}
+          </Text>
+        </View>
+      ))}
+    </>
   );
 }
 
