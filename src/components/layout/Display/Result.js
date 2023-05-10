@@ -1,22 +1,25 @@
-import { Text, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 
 import { useContext } from "react";
 import { ThemeContext } from "../../../contexts/Theme";
 
-export default function Result({ value, placeholder }) {
+export default function Result({ data }) {
   const { isDark } = useContext(ThemeContext);
 
-  let hasPlaceholder = value === "";
-
   return (
-    <Text
-      style={[
-        styles.text,
-        { color: hasPlaceholder ? "#777" : isDark ? "#FCFDFD" : "#222" },
-      ]}
-    >
-      {value || placeholder}
-    </Text>
+    <View style={{ flexDirection: "row", gap: 4 }}>
+      <Text style={[styles.text, { color: isDark ? "#FCFDFD" : "#222" }]}>
+        {data.values[0] ? data.values[0] : 0}
+      </Text>
+      <Text style={[styles.text, { color: "#b4757c" }]}>{data.operation}</Text>
+      <Text style={[styles.text, { color: isDark ? "#FCFDFD" : "#222" }]}>
+        {data.values[1]}
+      </Text>
+      <Text style={[styles.text, { color: "#555" }]}>
+        {data.virtualResult && "="}
+      </Text>
+      <Text style={[styles.text, { color: "#555" }]}>{data.virtualResult}</Text>
+    </View>
   );
 }
 
@@ -24,7 +27,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "monospace",
     fontWeight: "900",
-    fontSize: 50,
+    fontSize: 40,
     color: "#FCFDFD",
   },
 });

@@ -19,7 +19,7 @@ Keyboard.Row = KeyboardRow;
 
 const styles = StyleSheet.create({
   controlsContainer: {
-    flex: 3,
+    flex: 2,
     flexDirection: "row",
     gap: 20,
     backgroundColor: "#292d36",

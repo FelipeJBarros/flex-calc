@@ -7,12 +7,10 @@ export default function History({ data }) {
   const { isDark } = useContext(ThemeContext);
   const { values, operation, current, displayValue } = data;
 
-  const showValue = !(current == 0 && displayValue != "");
-
   return (
     <View style={styles.lastOperation}>
       <Text style={[styles.text, { color: isDark ? "#FCFDFD" : "#222" }]}>
-        {showValue && values[0]}
+        {values[0]}
       </Text>
       <Text style={[styles.text, { color: "#b4757c" }]}>{operation}</Text>
       <Text style={[styles.text, { color: isDark ? "#FCFDFD" : "#222" }]}>
@@ -31,7 +29,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "monospace",
     fontWeight: "900",
-    fontSize: 25,
+    fontSize: 20,
     color: "#FCFDFD",
   },
 });

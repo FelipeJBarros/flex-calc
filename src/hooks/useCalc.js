@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 
+const MAX_LENGTH = 9;
+
 const initialState = {
   displayValue: "0",
+  virtualResult: null,
   clearDisplay: false,
   operation: null,
   values: [null, null],
   current: 0,
-  virtualResult: "",
 };
 
-const MAX_LENGTH = 9;
-
 export default function useCalc() {
-  const [state, setState] = useState({ ...initialState });
+  let [state, setState] = useState({ ...initialState });
 
   useEffect(() => {
     if (state.values[1] === null) {
@@ -28,29 +28,16 @@ export default function useCalc() {
     }));
   }, [state.values[0], state.values[1]]);
 
-  function clearMemory() {
-    setState({ ...initialState, values: [null, null] });
-  }
-
-  function digitIsInvalid(digit) {
-    return (
-      (digit === "." && state.displayValue.includes(".")) ||
-      state.displayValue.length >= MAX_LENGTH
-    );
-  }
-
   function addDigit(digit) {
-    if (digitIsInvalid(digit)) return;
+    if (digit === "." && state.displayValue.includes(".")) return;
 
     const clearDisplay = state.displayValue === "0" || state.clearDisplay;
-    const currentValue = clearDisplay
-      ? ""
-      : state.values[state.current].toString();
+    const currentValue = clearDisplay ? "" : state.displayValue;
     const displayValue = currentValue + digit;
 
     setState((prevState) => ({
       ...prevState,
-      displayValue: null,
+      displayValue,
       clearDisplay: false,
     }));
 
@@ -61,13 +48,13 @@ export default function useCalc() {
       values[i] = newValue;
       setState((prevState) => ({ ...prevState, values }));
     }
+  }
 
-    setState((prevState) => ({ ...prevState, displayValue: "" }));
+  function clearMemory() {
+    setState({ ...initialState, values: [null, null] });
   }
 
   function setOperation(operation) {
-    if (state.displayValue === "MATH ERROR") return;
-    setState((prevState) => ({ ...prevState, displayValue: "" }));
     if (state.current === 0) {
       setState((prevState) => ({
         ...prevState,
@@ -78,19 +65,22 @@ export default function useCalc() {
     } else {
       const equals = operation === "=";
       const currentOperation = state.operation;
+
       const values = [...state.values];
       values[0] = resolve(currentOperation, values);
       values[1] = null;
+
       setState((prevState) => ({
         ...prevState,
         clearDisplay: !equals,
         current: equals ? 0 : 1,
-        displayValue: equals ? values[0] : "",
+        displayValue: values[0],
         operation: equals ? null : operation,
         values: [...values],
       }));
     }
   }
+
   function resolve(op, operands) {
     if (op === "+") return operands[0] + operands[1];
     else if (op === "-") return operands[0] - operands[1];
@@ -99,7 +89,7 @@ export default function useCalc() {
       if (operands[1] !== 0) {
         return operands[0] / operands[1];
       } else {
-        return "MATH ERROR";
+        return "NaN";
       }
     }
   }

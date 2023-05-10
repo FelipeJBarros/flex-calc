@@ -28,11 +28,8 @@ export default function App() {
         <StatusBar barStyle="light-content" />
         <ToggleThemeButton value={theme !== "dark"} onToogle={toggleTheme} />
         <Display>
-          <Display.History data={data} />
-          <Display.Result
-            value={data.displayValue}
-            placeholder={data.virtualResult}
-          />
+          {/* <Display.History data={data} /> */}
+          <Display.Result data={data} />
         </Display>
         <Keyboard>
           <Keyboard.Row>
