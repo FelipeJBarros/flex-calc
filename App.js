@@ -4,10 +4,10 @@ import { View, Text, StatusBar } from "react-native";
 import { ButtonHighlight as Button, ToggleThemeButton } from "./src/components";
 import { Keyboard, Display } from "./src/components/layout";
 
-import { FontAwesome } from "@expo/vector-icons";
-
 import ThemeProvider from "./src/contexts/Theme";
 import useCalc from "./src/hooks/useCalc";
+
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function App() {
   const [theme, setTheme] = useState("dark");
@@ -15,8 +15,14 @@ export default function App() {
     setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
   };
 
-  const { data, lastOperation, addDigit, setOperation, clearMemory } =
-    useCalc();
+  const {
+    data,
+    addDigit,
+    removeLastDigit,
+    setOperation,
+    clearMemory,
+    toogleSign,
+  } = useCalc();
 
   return (
     <ThemeProvider theme={theme}>
@@ -34,13 +40,19 @@ export default function App() {
         </Display>
         <Keyboard>
           <Keyboard.Row>
-            <Button label="AC" color="#2eeec4" onPress={clearMemory} />
-            <Button label="+/-" color="#2eeec4" onPress={() => {}} />
+            <Button
+              label={
+                data.displayValue != "" && data.displayValue != "0" ? "C" : "AC"
+              }
+              color="#2eeec4"
+              onPress={clearMemory}
+            />
+            <Button label="+/-" color="#2eeec4" onPress={() => toogleSign()} />
             <Button label="%" color="#2eeec4" onPress={() => {}} />
             <Button
-              label="/"
+              label="÷"
               color="#b4757c"
-              onPress={() => setOperation("/")}
+              onPress={() => setOperation("÷")}
             />
           </Keyboard.Row>
           <Keyboard.Row>
@@ -48,9 +60,9 @@ export default function App() {
             <Button label="8" onPress={() => addDigit("8")} />
             <Button label="9" onPress={() => addDigit("9")} />
             <Button
-              label="x"
+              label="×"
               color="#b4757c"
-              onPress={() => setOperation("*")}
+              onPress={() => setOperation("×")}
             />
           </Keyboard.Row>
           <Keyboard.Row>
@@ -69,8 +81,8 @@ export default function App() {
             <Button label="3" onPress={() => addDigit("3")} />
             <Button
               label="+"
-              onPress={() => setOperation("+")}
               color="#b4757c"
+              onPress={() => setOperation("+")}
             />
           </Keyboard.Row>
           <Keyboard.Row>
@@ -82,7 +94,7 @@ export default function App() {
                   color={theme === "dark" ? "#FCFDFD" : "#222"}
                 />
               }
-              onPress={() => {}}
+              onPress={() => removeLastDigit()}
             />
             <Button label="0" onPress={() => addDigit("0")} />
             <Button label="." onPress={() => addDigit(".")} />

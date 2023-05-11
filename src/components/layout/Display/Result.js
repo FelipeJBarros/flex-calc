@@ -7,7 +7,14 @@ export default function Result({ data }) {
   const { isDark } = useContext(ThemeContext);
 
   return (
-    <View style={{ flexDirection: "row", gap: 4 }}>
+    <View
+      style={{
+        flexDirection: "row",
+        gap: 4,
+        flexWrap: "wrap",
+        justifyContent: "flex-end",
+      }}
+    >
       <Text style={[styles.text, { color: isDark ? "#FCFDFD" : "#222" }]}>
         {data.values[0] ? data.values[0] : 0}
       </Text>
@@ -16,7 +23,7 @@ export default function Result({ data }) {
         {data.values[1]}
       </Text>
       <Text style={[styles.text, { color: "#555" }]}>
-        {data.virtualResult && "="}
+        {data.virtualResult && data.virtualResult != 0 && "="}
       </Text>
       <Text style={[styles.text, { color: "#555" }]}>{data.virtualResult}</Text>
     </View>

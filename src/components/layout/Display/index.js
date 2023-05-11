@@ -12,9 +12,11 @@ Display.History = History;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    margin: 25,
+    marginHorizontal: 25,
+    marginBottom: 25,
     justifyContent: "flex-end",
     alignItems: "flex-end",
+    overflow: "scroll",
   },
   text: {
     fontFamily: "monospace",
