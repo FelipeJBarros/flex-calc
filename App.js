@@ -24,6 +24,10 @@ export default function App() {
     toogleSign,
   } = useCalc();
 
+  let themeValue = theme !== "dark";
+  let clearMemoryLabel =
+    data.displayValue != "" && data.displayValue != "0" ? "C" : "AC";
+
   return (
     <ThemeProvider theme={theme}>
       <View
@@ -33,7 +37,7 @@ export default function App() {
         }}
       >
         <StatusBar barStyle="light-content" />
-        <ToggleThemeButton value={theme !== "dark"} onToogle={toggleTheme} />
+        <ToggleThemeButton value={themeValue} onToogle={toggleTheme} />
         <Display>
           <Display.History data={data.history} />
           <Display.Result data={data} />
@@ -41,14 +45,16 @@ export default function App() {
         <Keyboard>
           <Keyboard.Row>
             <Button
-              label={
-                data.displayValue != "" && data.displayValue != "0" ? "C" : "AC"
-              }
+              label={clearMemoryLabel}
               color="#2eeec4"
               onPress={clearMemory}
             />
-            <Button label="+/-" color="#2eeec4" onPress={() => toogleSign()} />
-            <Button label="%" color="#2eeec4" onPress={() => {}} />
+            <Button label="+/-" color="#2eeec4" onPress={toogleSign} />
+            <Button
+              label="%"
+              color="#2eeec4"
+              onPress={() => setOperation("%")}
+            />
             <Button
               label="÷"
               color="#b4757c"

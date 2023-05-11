@@ -22,10 +22,6 @@ export default function Result({ data }) {
       <Text style={[styles.text, { color: isDark ? "#FCFDFD" : "#222" }]}>
         {data.values[1]}
       </Text>
-      <Text style={[styles.text, { color: "#555" }]}>
-        {data.virtualResult && data.virtualResult != 0 && "="}
-      </Text>
-      <Text style={[styles.text, { color: "#555" }]}>{data.virtualResult}</Text>
     </View>
   );
 }
